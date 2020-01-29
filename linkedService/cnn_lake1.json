@@ -1,0 +1,13 @@
+{
+	"name": "cnn_lake1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "adl://datalakegn1.azuredatalakestore.net/",
+			"tenant": "791d2890-4b97-4668-b70f-41eefe8af15c",
+			"subscriptionId": "9887e9c0-056f-41ca-aa60-6b8f4ddf0897",
+			"resourceGroupName": "RZ_Bigdata"
+		}
+	}
+}
