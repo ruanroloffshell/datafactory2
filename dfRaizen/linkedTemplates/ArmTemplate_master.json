@@ -1,0 +1,146 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "dfRaizen"
+		},
+		"cnn_blob1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'cnn_blob1'"
+		},
+		"cnn_lake2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'cnn_lake2'"
+		},
+		"cnn_sqlraiz_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz'"
+		},
+		"serv_batch_accessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessKey' of 'serv_batch'"
+		},
+		"cnn_blobshared_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'cnn_blobshared'"
+		},
+		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "adl://datalakegn1.azuredatalakestore.net/"
+		},
+		"cnn_lake1_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "791d2890-4b97-4668-b70f-41eefe8af15c"
+		},
+		"cnn_lake1_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "9887e9c0-056f-41ca-aa60-6b8f4ddf0897"
+		},
+		"cnn_lake1_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "RZ_Bigdata"
+		},
+		"cnn_lake2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
+		},
+		"serv_batch_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "batchserver"
+		},
+		"serv_batch_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://batchserver.eastus2.batch.azure.com"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"cnn_blob1_connectionString": {
+						"value": "[parameters('cnn_blob1_connectionString')]"
+					},
+					"cnn_lake2_accountKey": {
+						"value": "[parameters('cnn_lake2_accountKey')]"
+					},
+					"cnn_sqlraiz_connectionString": {
+						"value": "[parameters('cnn_sqlraiz_connectionString')]"
+					},
+					"cnn_blobshared_connectionString": {
+						"value": "[parameters('cnn_blobshared_connectionString')]"
+					},
+					"serv_batch_accessKey": {
+						"value": "[parameters('serv_batch_accessKey')]"
+					},
+					"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
+						"value": "[parameters('cnn_lake1_properties_typeProperties_dataLakeStoreUri')]"
+					},
+					"cnn_lake1_properties_typeProperties_tenant": {
+						"value": "[parameters('cnn_lake1_properties_typeProperties_tenant')]"
+					},
+					"cnn_lake1_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('cnn_lake1_properties_typeProperties_subscriptionId')]"
+					},
+					"cnn_lake1_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('cnn_lake1_properties_typeProperties_resourceGroupName')]"
+					},
+					"cnn_lake2_properties_typeProperties_url": {
+						"value": "[parameters('cnn_lake2_properties_typeProperties_url')]"
+					},
+					"serv_batch_properties_typeProperties_accountName": {
+						"value": "[parameters('serv_batch_properties_typeProperties_accountName')]"
+					},
+					"serv_batch_properties_typeProperties_batchUri": {
+						"value": "[parameters('serv_batch_properties_typeProperties_batchUri')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
+			]
+		}
+	]
+}

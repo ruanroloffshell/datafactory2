@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dfRaizen"
+		},
+		"cnn_blob1_connectionString": {
+			"value": ""
+		},
+		"cnn_lake2_accountKey": {
+			"value": ""
+		},
+		"cnn_sqlraiz_connectionString": {
+			"value": ""
+		},
+		"serv_batch_accessKey": {
+			"value": ""
+		},
+		"cnn_blobshared_connectionString": {
+			"value": ""
+		},
+		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
+			"value": "adl://datalakegn1.azuredatalakestore.net/"
+		},
+		"cnn_lake1_properties_typeProperties_tenant": {
+			"value": "791d2890-4b97-4668-b70f-41eefe8af15c"
+		},
+		"cnn_lake1_properties_typeProperties_subscriptionId": {
+			"value": "9887e9c0-056f-41ca-aa60-6b8f4ddf0897"
+		},
+		"cnn_lake1_properties_typeProperties_resourceGroupName": {
+			"value": "RZ_Bigdata"
+		},
+		"cnn_lake2_properties_typeProperties_url": {
+			"value": "https://lakestorageg2.dfs.core.windows.net"
+		},
+		"serv_batch_properties_typeProperties_accountName": {
+			"value": "batchserver"
+		},
+		"serv_batch_properties_typeProperties_batchUri": {
+			"value": "https://batchserver.eastus2.batch.azure.com"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
