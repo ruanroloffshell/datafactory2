@@ -13,11 +13,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Person.csv",
+				"fileName": "Person2.csv",
 				"folderPath": "oltp",
 				"container": "tmplake"
 			},
-			"columnDelimiter": "+|",
+			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"quoteChar": "\""
 		},
