@@ -18,6 +18,35 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "CustomerID",
+				"type": "UTF8"
+			},
+			{
+				"name": "PersonID",
+				"type": "UTF8"
+			},
+			{
+				"name": "StoreID",
+				"type": "UTF8"
+			},
+			{
+				"name": "AccountNumber",
+				"type": "UTF8"
+			},
+			{
+				"name": "rowguid",
+				"type": "UTF8"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "UTF8"
+			},
+			{
+				"name": "TerritoryID",
+				"type": "UTF8"
+			}
+		]
 	}
 }
