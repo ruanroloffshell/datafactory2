@@ -1,6 +1,37 @@
 {
 	"name": "Transform To Layer - Sales",
 	"properties": {
+		"activities": [
+			{
+				"name": "Custom1",
+				"type": "Custom",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": "echo \"teste\"",
+					"resourceLinkedService": {
+						"referenceName": "cnn_blobshared",
+						"type": "LinkedServiceReference"
+					},
+					"folderPath": "code",
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "serv_batch",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
 		"folder": {
 			"name": "Sales/Bike"
 		},
