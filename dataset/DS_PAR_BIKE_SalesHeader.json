@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "raw/bike/customer",
+				"folderPath": "raw/bike/salesheader",
 				"fileSystem": "lakeg2"
 			},
 			"compressionCodec": "snappy"
