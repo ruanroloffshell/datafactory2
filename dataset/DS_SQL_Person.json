@@ -1,0 +1,57 @@
+{
+	"name": "DS_SQL_Person",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "cnn_sqlraiz",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLServer"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CurrencyRateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CurrencyRateDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "FromCurrencyCode",
+				"type": "nchar"
+			},
+			{
+				"name": "ToCurrencyCode",
+				"type": "nchar"
+			},
+			{
+				"name": "AverageRate",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "EndOfDayRate",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ztmp",
+			"table": "Person"
+		}
+	}
+}
