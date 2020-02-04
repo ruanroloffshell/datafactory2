@@ -185,7 +185,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DF - Customer Bike Extract')]",
+			"name": "[concat(parameters('factoryName'), '/DF - Customer Bike Raw')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -267,7 +267,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DF - Customer Bike Load')]",
+			"name": "[concat(parameters('factoryName'), '/DF - Customer Bike SQL')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -325,7 +325,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "DF - Customer Bike Extract",
+								"referenceName": "DF - Customer Bike Raw",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -347,7 +347,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DF - Customer Bike Extract')]"
+				"[concat(variables('factoryId'), '/dataflows/DF - Customer Bike Raw')]"
 			]
 		}
 	]
