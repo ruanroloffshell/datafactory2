@@ -1,5 +1,5 @@
 {
-	"name": "DS_PAR_BIKE_Customer",
+	"name": "DS_PAR_BIKE_SalesHeader",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "cnn_lake2",

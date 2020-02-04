@@ -1,5 +1,5 @@
 {
-	"name": "DS_PAR_BIKE_Customer",
+	"name": "DS_PAR_BIKE_Person",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "cnn_lake2",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "raw/bike/customer",
+				"folderPath": "raw/bike/person",
 				"fileSystem": "lakeg2"
 			},
 			"compressionCodec": "snappy"
