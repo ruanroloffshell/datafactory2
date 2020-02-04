@@ -13,8 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "customer",
-				"folderPath": "raw",
+				"folderPath": "raw/customer",
 				"fileSystem": "lakeg2"
 			},
 			"compressionCodec": "snappy"
