@@ -1,5 +1,5 @@
 {
-	"name": "DS_Customer_Delimited",
+	"name": "DelimitedText1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "cnn_blob1",
@@ -13,7 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "tmplake"
+				"fileName": "uploadPerson.csv",
+				"container": "tmp"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

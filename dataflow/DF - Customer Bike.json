@@ -1,6 +1,9 @@
 {
-	"name": "DF - Customer",
+	"name": "DF - Customer Bike",
 	"properties": {
+		"folder": {
+			"name": "Sales"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
