@@ -1,5 +1,5 @@
 {
-	"name": "DS_Customer_Delimited",
+	"name": "DS_TAB_Customer",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "cnn_blob1",
@@ -13,13 +13,33 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "Customer.csv",
+				"folderPath": "oltp",
 				"container": "tmplake"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
 			"escapeChar": "\\",
 			"quoteChar": "\""
 		},
 		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
 			{
 				"type": "String"
 			}

@@ -1,0 +1,54 @@
+{
+	"name": "DS_SQL_Customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "cnn_sqlraiz",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLServer"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CustomerID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PersonID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "StoreID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TerritoryID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AccountNumber",
+				"type": "char"
+			},
+			{
+				"name": "rowguid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ztmp",
+			"table": "Customer"
+		}
+	}
+}
