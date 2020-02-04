@@ -1,0 +1,24 @@
+{
+	"name": "DS_PAR_Customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "cnn_lake2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DataLake"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer",
+				"folderPath": "raw",
+				"fileSystem": "lakeg2"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
