@@ -8,6 +8,9 @@
 		"cnn_blob1_connectionString": {
 			"value": ""
 		},
+		"cnn_blobshared_connectionString": {
+			"value": ""
+		},
 		"cnn_lake2_accountKey": {
 			"value": ""
 		},
@@ -15,9 +18,6 @@
 			"value": ""
 		},
 		"serv_batch_accessKey": {
-			"value": ""
-		},
-		"cnn_blobshared_connectionString": {
 			"value": ""
 		},
 		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {

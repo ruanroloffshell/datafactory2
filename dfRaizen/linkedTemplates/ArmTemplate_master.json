@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'cnn_blob1'"
 		},
+		"cnn_blobshared_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'cnn_blobshared'"
+		},
 		"cnn_lake2_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'cnn_lake2'"
@@ -22,10 +26,6 @@
 		"serv_batch_accessKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessKey' of 'serv_batch'"
-		},
-		"cnn_blobshared_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'cnn_blobshared'"
 		},
 		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
@@ -85,14 +85,14 @@
 					"cnn_blob1_connectionString": {
 						"value": "[parameters('cnn_blob1_connectionString')]"
 					},
+					"cnn_blobshared_connectionString": {
+						"value": "[parameters('cnn_blobshared_connectionString')]"
+					},
 					"cnn_lake2_accountKey": {
 						"value": "[parameters('cnn_lake2_accountKey')]"
 					},
 					"cnn_sqlraiz_connectionString": {
 						"value": "[parameters('cnn_sqlraiz_connectionString')]"
-					},
-					"cnn_blobshared_connectionString": {
-						"value": "[parameters('cnn_blobshared_connectionString')]"
 					},
 					"serv_batch_accessKey": {
 						"value": "[parameters('serv_batch_accessKey')]"
