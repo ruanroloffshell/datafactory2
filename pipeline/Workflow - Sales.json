@@ -1,6 +1,9 @@
 {
 	"name": "Workflow - Sales",
 	"properties": {
+		"folder": {
+			"name": "Sales/Bike"
+		},
 		"annotations": []
 	}
 }

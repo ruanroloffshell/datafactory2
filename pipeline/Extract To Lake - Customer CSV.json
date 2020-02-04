@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "DF - Customer",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -27,7 +27,7 @@
 			}
 		],
 		"folder": {
-			"name": "Sales"
+			"name": "Sales/Bike"
 		},
 		"annotations": []
 	}

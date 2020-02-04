@@ -1,5 +1,5 @@
 {
-	"name": "Load To SQL - Sales Header",
+	"name": "Custom - Call Function XPTO",
 	"properties": {
 		"folder": {
 			"name": "Sales/Bike"

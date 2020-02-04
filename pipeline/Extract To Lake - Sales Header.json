@@ -2,7 +2,7 @@
 	"name": "Extract To Lake - Sales Header",
 	"properties": {
 		"folder": {
-			"name": "Sales"
+			"name": "Sales/Bike"
 		},
 		"annotations": []
 	}
