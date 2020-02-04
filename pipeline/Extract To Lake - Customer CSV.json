@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DF - Customer Bike Extract",
+						"referenceName": "DF - Customer Bike Raw",
 						"type": "DataFlowReference"
 					},
 					"compute": {
