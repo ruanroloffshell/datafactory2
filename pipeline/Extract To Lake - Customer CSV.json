@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Extract To Lake - Customer CSV",
 	"properties": {
 		"activities": [
 			{
