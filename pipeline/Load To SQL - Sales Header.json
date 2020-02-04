@@ -1,0 +1,9 @@
+{
+	"name": "Load To SQL - Sales Header",
+	"properties": {
+		"folder": {
+			"name": "Sales"
+		},
+		"annotations": []
+	}
+}

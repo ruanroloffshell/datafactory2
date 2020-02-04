@@ -1,9 +1,12 @@
 {
-	"name": "DelimitedText1",
+	"name": "DS_Customer_Delimited",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "cnn_blob1",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "CSV"
 		},
 		"annotations": [],
 		"type": "DelimitedText",

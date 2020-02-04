@@ -1,0 +1,9 @@
+{
+	"name": "Extract To Lake - Sales Header",
+	"properties": {
+		"folder": {
+			"name": "Sales"
+		},
+		"annotations": []
+	}
+}
