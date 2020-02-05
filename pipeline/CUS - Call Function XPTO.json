@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Custom1",
+				"name": "Custom - XPTO",
 				"type": "Custom",
 				"dependsOn": [],
 				"policy": {
