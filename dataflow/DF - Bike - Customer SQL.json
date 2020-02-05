@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_TAB_Customer",
+						"referenceName": "DS_PAR_BIKE_Customer",
 						"type": "DatasetReference"
 					},
 					"name": "src01customer"
@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_PAR_BIKE_Customer",
+						"referenceName": "DS_SQL_Customer",
 						"type": "DatasetReference"
 					},
 					"name": "sk01customer"
@@ -29,7 +29,7 @@
 					"name": "slc01customer"
 				}
 			],
-			"script": "source(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> src01customer\nsrc01customer select(mapColumn(\n\t\tCustomerID = Column_1,\n\t\tPersonID = Column_2,\n\t\tStoreID = Column_3,\n\t\tTerritoryID = Column_4,\n\t\tAccountNumber = Column_5,\n\t\trowguid = Column_6,\n\t\tModifiedDate = Column_7\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> slc01customer\nslc01customer sink(input(\n\t\tCustomerID as integer,\n\t\tPersonID as integer,\n\t\tStoreID as integer,\n\t\tTerritoryID as integer,\n\t\tAccountNumber as string,\n\t\trowguid as string,\n\t\tModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tmapColumn(\n\t\tCustomerID,\n\t\tPersonID,\n\t\tStoreID,\n\t\tTerritoryID,\n\t\tAccountNumber,\n\t\trowguid,\n\t\tModifiedDate\n\t),\n\tpartitionBy('key',\n\t\t0,\n\t\tTerritoryID\n\t)) ~> sk01customer"
+			"script": "source(output(\n\t\tCustomerID as integer,\n\t\tPersonID as integer,\n\t\tStoreID as integer,\n\t\tTerritoryID as integer,\n\t\tAccountNumber as string,\n\t\trowguid as string,\n\t\tModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> src01customer\nsrc01customer select(mapColumn(\n\t\tCustomerID,\n\t\tPersonID,\n\t\tStoreID,\n\t\tTerritoryID,\n\t\tAccountNumber,\n\t\trowguid,\n\t\tModifiedDate\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> slc01customer\nslc01customer sink(input(\n\t\tCustomerID as integer,\n\t\tPersonID as integer,\n\t\tStoreID as integer,\n\t\tTerritoryID as integer,\n\t\tAccountNumber as string,\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tCustomerID,\n\t\tPersonID,\n\t\tStoreID,\n\t\tTerritoryID,\n\t\tAccountNumber,\n\t\trowguid,\n\t\tModifiedDate\n\t),\n\tpartitionBy('key',\n\t\t0,\n\t\tTerritoryID\n\t)) ~> sk01customer"
 		}
 	}
 }
