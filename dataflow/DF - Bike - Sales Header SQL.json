@@ -1,0 +1,12 @@
+{
+	"name": "DF - Bike - Sales Header SQL",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
