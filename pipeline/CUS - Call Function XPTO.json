@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "ls -l",
+					"command": "cat file.txt \n\nif [ $? -eq 0 ]\nthen\n  echo \"The script ran ok\"\n  exit 0\nelse\n  echo \"The script failed\" >&2\n  exit 1\nfi",
 					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
