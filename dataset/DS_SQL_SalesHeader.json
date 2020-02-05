@@ -134,7 +134,7 @@
 			},
 			{
 				"name": "rowguid",
-				"type": "uniqueidentifier"
+				"type": "nvarchar"
 			},
 			{
 				"name": "ModifiedDate",
