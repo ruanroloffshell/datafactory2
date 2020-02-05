@@ -3,32 +3,95 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Custom1",
-				"type": "Custom",
+				"name": "EXL - Customer",
+				"type": "ExecutePipeline",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "echo \"teste\"",
-					"resourceLinkedService": {
-						"referenceName": "cnn_blobshared",
-						"type": "LinkedServiceReference"
+					"pipeline": {
+						"referenceName": "EXL - Customer",
+						"type": "PipelineReference"
 					},
-					"folderPath": "code",
-					"referenceObjects": {
-						"linkedServices": [],
-						"datasets": []
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EXL- Sales Header",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "EXL- Sales Header",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "LSQL - Customer",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EXL - Customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
-				},
-				"linkedServiceName": {
-					"referenceName": "serv_batch",
-					"type": "LinkedServiceReference"
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LSQL - Customer",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "LSQL - Sales Header",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EXL- Sales Header",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LSQL - Sales Header",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "CUS - Call Function XPTO",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "LSQL - Customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "LSQL - Sales Header",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "CUS - Call Function XPTO",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],
