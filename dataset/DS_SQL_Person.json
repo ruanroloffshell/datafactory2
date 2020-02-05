@@ -50,10 +50,6 @@
 				"precision": 10
 			},
 			{
-				"name": "rowguid",
-				"type": "nvarchar"
-			},
-			{
 				"name": "ModifiedDate",
 				"type": "datetime",
 				"precision": 23,

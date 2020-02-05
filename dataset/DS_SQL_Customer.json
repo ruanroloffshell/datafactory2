@@ -36,10 +36,6 @@
 				"type": "char"
 			},
 			{
-				"name": "rowguid",
-				"type": "nvarchar"
-			},
-			{
 				"name": "ModifiedDate",
 				"type": "datetime",
 				"precision": 23,
