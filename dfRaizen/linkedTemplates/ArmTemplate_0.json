@@ -291,10 +291,6 @@
 						"type": "char"
 					},
 					{
-						"name": "rowguid",
-						"type": "uniqueidentifier"
-					},
-					{
 						"name": "ModifiedDate",
 						"type": "datetime",
 						"precision": 23,
@@ -326,35 +322,42 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "CurrencyRateID",
+						"name": "BusinessEntityID",
 						"type": "int",
 						"precision": 10
 					},
 					{
-						"name": "CurrencyRateDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "FromCurrencyCode",
+						"name": "PersonType",
 						"type": "nchar"
 					},
 					{
-						"name": "ToCurrencyCode",
-						"type": "nchar"
+						"name": "NameStyle",
+						"type": "bit"
 					},
 					{
-						"name": "AverageRate",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"name": "Title",
+						"type": "nvarchar"
 					},
 					{
-						"name": "EndOfDayRate",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Suffix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailPromotion",
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "ModifiedDate",
@@ -507,10 +510,6 @@
 					{
 						"name": "Comment",
 						"type": "nvarchar"
-					},
-					{
-						"name": "rowguid",
-						"type": "uniqueidentifier"
 					},
 					{
 						"name": "ModifiedDate",
@@ -902,27 +901,11 @@
 				},
 				"schema": [
 					{
-						"name": "CustomerID",
-						"type": "INT32"
-					},
-					{
-						"name": "PersonID",
-						"type": "INT32"
-					},
-					{
-						"name": "StoreID",
-						"type": "INT32"
-					},
-					{
-						"name": "TerritoryID",
-						"type": "INT32"
-					},
-					{
-						"name": "AccountNumber",
+						"name": "CurrencyCode",
 						"type": "UTF8"
 					},
 					{
-						"name": "rowguid",
+						"name": "Name",
 						"type": "UTF8"
 					},
 					{
@@ -959,31 +942,39 @@
 				},
 				"schema": [
 					{
-						"name": "CustomerID",
+						"name": "CurrencyRateID",
 						"type": "INT32"
 					},
 					{
-						"name": "PersonID",
-						"type": "INT32"
+						"name": "CurrencyRateDate",
+						"type": "INT96"
 					},
 					{
-						"name": "StoreID",
-						"type": "INT32"
-					},
-					{
-						"name": "TerritoryID",
-						"type": "INT32"
-					},
-					{
-						"name": "AccountNumber",
+						"name": "FromCurrencyCode",
 						"type": "UTF8"
 					},
 					{
-						"name": "rowguid",
+						"name": "ToCurrencyCode",
 						"type": "UTF8"
+					},
+					{
+						"name": "AverageRate",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
+					},
+					{
+						"name": "EndOfDayRate",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
 					},
 					{
 						"name": "ModifiedDate",
+						"type": "UTF8"
+					},
+					{
+						"name": "Z_PID_ModifiedDate",
 						"type": "UTF8"
 					}
 				]
@@ -1093,15 +1084,51 @@
 				},
 				"schema": [
 					{
+						"name": "SalesOrderID",
+						"type": "INT32"
+					},
+					{
+						"name": "RevisionNumber",
+						"type": "INT32"
+					},
+					{
+						"name": "OrderDate",
+						"type": "INT96"
+					},
+					{
+						"name": "DueDate",
+						"type": "INT96"
+					},
+					{
+						"name": "ShipDate",
+						"type": "INT96"
+					},
+					{
+						"name": "Status",
+						"type": "INT32"
+					},
+					{
+						"name": "OnlineOrderFlag",
+						"type": "UTF8"
+					},
+					{
+						"name": "SalesOrderNumber",
+						"type": "UTF8"
+					},
+					{
+						"name": "PurchaseOrderNumber",
+						"type": "UTF8"
+					},
+					{
+						"name": "AccountNumber",
+						"type": "UTF8"
+					},
+					{
 						"name": "CustomerID",
 						"type": "INT32"
 					},
 					{
-						"name": "PersonID",
-						"type": "INT32"
-					},
-					{
-						"name": "StoreID",
+						"name": "SalesPersonID",
 						"type": "INT32"
 					},
 					{
@@ -1109,7 +1136,55 @@
 						"type": "INT32"
 					},
 					{
-						"name": "AccountNumber",
+						"name": "BillToAddressID",
+						"type": "INT32"
+					},
+					{
+						"name": "ShipToAddressID",
+						"type": "INT32"
+					},
+					{
+						"name": "ShipMethodID",
+						"type": "INT32"
+					},
+					{
+						"name": "CreditCardID",
+						"type": "INT32"
+					},
+					{
+						"name": "CreditCardApprovalCode",
+						"type": "UTF8"
+					},
+					{
+						"name": "CurrencyRateID",
+						"type": "INT32"
+					},
+					{
+						"name": "SubTotal",
+						"type": "DECIMAL",
+						"precision": 12,
+						"scale": 4
+					},
+					{
+						"name": "TaxAmt",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
+					},
+					{
+						"name": "Freight",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
+					},
+					{
+						"name": "TotalDue",
+						"type": "DECIMAL",
+						"precision": 12,
+						"scale": 4
+					},
+					{
+						"name": "Comment",
 						"type": "UTF8"
 					},
 					{
@@ -1118,6 +1193,10 @@
 					},
 					{
 						"name": "ModifiedDate",
+						"type": "UTF8"
+					},
+					{
+						"name": "Z_PID_ModifiedDate",
 						"type": "UTF8"
 					}
 				]

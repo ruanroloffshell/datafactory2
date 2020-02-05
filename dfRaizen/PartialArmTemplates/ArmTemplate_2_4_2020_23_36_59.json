@@ -6,153 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "dfRaizen"
-		},
-		"cnn_blob1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'cnn_blob1'"
-		},
-		"cnn_blobshared_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'cnn_blobshared'"
-		},
-		"cnn_lake2_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'cnn_lake2'"
-		},
-		"cnn_sqlraiz_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz'"
-		},
-		"serv_batch_accessKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessKey' of 'serv_batch'"
-		},
-		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
-			"type": "string",
-			"defaultValue": "adl://datalakegn1.azuredatalakestore.net/"
-		},
-		"cnn_lake1_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "791d2890-4b97-4668-b70f-41eefe8af15c"
-		},
-		"cnn_lake1_properties_typeProperties_subscriptionId": {
-			"type": "string",
-			"defaultValue": "9887e9c0-056f-41ca-aa60-6b8f4ddf0897"
-		},
-		"cnn_lake1_properties_typeProperties_resourceGroupName": {
-			"type": "string",
-			"defaultValue": "RZ_Bigdata"
-		},
-		"cnn_lake2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
-		},
-		"serv_batch_properties_typeProperties_accountName": {
-			"type": "string",
-			"defaultValue": "batchserver"
-		},
-		"serv_batch_properties_typeProperties_batchUri": {
-			"type": "string",
-			"defaultValue": "https://batchserver.eastus2.batch.azure.com"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/CUS - Call Function XPTO')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Sales/Bike"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXL - Customer')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "DF - Customer Bike",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.00:10:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "DF - Bike - Customer Raw",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"src01customer": {},
-									"src02person": {},
-									"sk01customer": {},
-									"sk02person": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "MemoryOptimized"
-							}
-						}
-					}
-				],
-				"folder": {
-					"name": "Sales/Bike"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DF - Bike - Customer Raw')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/EXL- Sales Header')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -174,18 +33,8 @@
 						"typeProperties": {
 							"dataflow": {
 								"referenceName": "DF - Bike - Sales Header Raw",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"src01sales": {},
-									"src02currency": {},
-									"src03currencyrate": {},
-									"sk01sales": {},
-									"sk02currency": {},
-									"sk03currencyrate": {}
-								}
+								"type": "DataFlowReference"
 							},
-							"staging": {},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
@@ -200,52 +49,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/DF - Bike - Sales Header Raw')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GV - Sales - VariableName')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Sales/Bike"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
 			]
 		},
 		{
@@ -269,16 +72,8 @@
 						"typeProperties": {
 							"dataflow": {
 								"referenceName": "DF - Bike - Customer SQL",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"src01customer": {},
-									"src02person": {},
-									"sk01customer": {},
-									"sk02person": {}
-								}
+								"type": "DataFlowReference"
 							},
-							"staging": {},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
@@ -316,18 +111,8 @@
 						"typeProperties": {
 							"dataflow": {
 								"referenceName": "DF - Bike - Sales Header SQL",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"src01sales": {},
-									"src02currency": {},
-									"src03rate": {},
-									"sk01sales": {},
-									"sk02currency": {},
-									"sk03rate": {}
-								}
+								"type": "DataFlowReference"
 							},
-							"staging": {},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
@@ -342,355 +127,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/DF - Bike - Sales Header SQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TFL - Sales')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Sales/Bike"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/WKF- Sales')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Sales/Bike"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "HR"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "System/SALESFORCE"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "System/SAP"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_Customer')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_lake2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DataLake/RAW"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "raw/bike/customer",
-						"fileSystem": "lakeg2"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "CustomerID",
-						"type": "INT32"
-					},
-					{
-						"name": "PersonID",
-						"type": "INT32"
-					},
-					{
-						"name": "StoreID",
-						"type": "INT32"
-					},
-					{
-						"name": "TerritoryID",
-						"type": "INT32"
-					},
-					{
-						"name": "AccountNumber",
-						"type": "UTF8"
-					},
-					{
-						"name": "rowguid",
-						"type": "UTF8"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SQL_CurrencyRate')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_sqlraiz",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "SQLServer"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CurrencyRateID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CurrencyRateDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "FromCurrencyCode",
-						"type": "nchar"
-					},
-					{
-						"name": "ToCurrencyCode",
-						"type": "nchar"
-					},
-					{
-						"name": "AverageRate",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					},
-					{
-						"name": "EndOfDayRate",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ztmp",
-					"table": "CurrencyRate"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_sqlraiz')]"
 			]
 		},
 		{
@@ -744,9 +180,7 @@
 					"table": "Customer"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_sqlraiz')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_SQL_Person')]",
@@ -813,9 +247,7 @@
 					"table": "Person"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_sqlraiz')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_SQL_SalesHeader')]",
@@ -965,390 +397,7 @@
 					"table": "SalesOrderHeader"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_sqlraiz')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_TAB_CurrencyRate')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_blob1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CSV"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "CurrencyRate.csv",
-						"folderPath": "oltp",
-						"container": "tmplake"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_TAB_Customer')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_blob1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CSV"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Customer.csv",
-						"folderPath": "oltp",
-						"container": "tmplake"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_TAB_Person')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_blob1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CSV"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Person2.csv",
-						"folderPath": "oltp",
-						"container": "tmplake"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_TAB_SalesHeader')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_blob1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CSV"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "SalesOrderHeader.csv",
-						"folderPath": "oltp",
-						"container": "tmplake"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cnn_blob1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('cnn_blob1_connectionString')]"
-				}
-			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cnn_blobshared')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('cnn_blobshared_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cnn_lake1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDataLakeStore",
-				"typeProperties": {
-					"dataLakeStoreUri": "[parameters('cnn_lake1_properties_typeProperties_dataLakeStoreUri')]",
-					"tenant": "[parameters('cnn_lake1_properties_typeProperties_tenant')]",
-					"subscriptionId": "[parameters('cnn_lake1_properties_typeProperties_subscriptionId')]",
-					"resourceGroupName": "[parameters('cnn_lake1_properties_typeProperties_resourceGroupName')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cnn_lake2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('cnn_lake2_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('cnn_lake2_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cnn_sqlraiz')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('cnn_sqlraiz_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/serv_batch')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBatch",
-				"typeProperties": {
-					"accountName": "[parameters('serv_batch_properties_typeProperties_accountName')]",
-					"accessKey": {
-						"type": "SecureString",
-						"value": "[parameters('serv_batch_accessKey')]"
-					},
-					"batchUri": "[parameters('serv_batch_properties_typeProperties_batchUri')]",
-					"poolName": "pool01",
-					"linkedServiceName": {
-						"referenceName": "cnn_blobshared",
-						"type": "LinkedServiceReference"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DF - Bike - Customer Raw')]",
@@ -1366,16 +415,14 @@
 								"referenceName": "DS_TAB_Customer",
 								"type": "DatasetReference"
 							},
-							"name": "src01customer",
-							"typeProperties": {}
+							"name": "src01customer"
 						},
 						{
 							"dataset": {
 								"referenceName": "DS_TAB_Person",
 								"type": "DatasetReference"
 							},
-							"name": "src02person",
-							"typeProperties": {}
+							"name": "src02person"
 						}
 					],
 					"sinks": [
@@ -1411,12 +458,7 @@
 					"script": "source(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> src01customer\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string,\n\t\tColumn_9 as string,\n\t\tColumn_10 as string,\n\t\tColumn_11 as string,\n\t\tColumn_12 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> src02person\nsrc01customer select(mapColumn(\n\t\tCustomerID = Column_1,\n\t\tPersonID = Column_2,\n\t\tStoreID = Column_3,\n\t\tTerritoryID = Column_4,\n\t\tAccountNumber = Column_5,\n\t\trowguid = Column_6,\n\t\tModifiedDate = Column_7\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> slc01customer\nslc01customer derive(CustomerID = toInteger(CustomerID),\n\t\tPersonID = toInteger(PersonID),\n\t\tStoreID = toInteger(StoreID),\n\t\tTerritoryID = toInteger(TerritoryID),\n\t\tAccountNumber = AccountNumber,\n\t\trowguid = rowguid,\n\t\tModifiedDate = ModifiedDate) ~> dev01customer\nsrc02person select(mapColumn(\n\t\tBusinessEntityID = Column_1,\n\t\tPersonType = Column_2,\n\t\tNameStyle = Column_3,\n\t\tTitle = Column_4,\n\t\tFirstName = Column_5,\n\t\tMiddleName = Column_6,\n\t\tLastName = Column_7,\n\t\tSuffix = Column_8,\n\t\tEmailPromotion = Column_9,\n\t\trowguid = Column_10,\n\t\tModifiedDate = Column_12\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> slc02person\nslc02person derive(BusinessEntityID = toInteger(BusinessEntityID),\n\t\tPersonType = PersonType,\n\t\tNameStyle = NameStyle,\n\t\tTitle = Title,\n\t\tFirstName = FirstName,\n\t\tMiddleName = MiddleName,\n\t\tLastName = LastName,\n\t\tSuffix = Suffix,\n\t\tEmailPromotion = toInteger(EmailPromotion),\n\t\trowguid = rowguid,\n\t\tModifiedDate = ModifiedDate,\n\t\tZ_PID_ModifiedDate = toInteger(replace(left(ModifiedDate, 7), '-',''))) ~> dev02person\ndev01customer sink(input(\n\t\tCustomerID as integer,\n\t\tPersonID as integer,\n\t\tStoreID as integer,\n\t\tTerritoryID as integer,\n\t\tAccountNumber as string,\n\t\trowguid as string,\n\t\tModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\ttruncate: true,\n\tmapColumn(\n\t\tCustomerID,\n\t\tPersonID,\n\t\tStoreID,\n\t\tTerritoryID,\n\t\tAccountNumber,\n\t\trowguid,\n\t\tModifiedDate\n\t),\n\tpartitionBy('hash', 5,\n\t\tTerritoryID\n\t)) ~> sk01customer\ndev02person sink(input(\n\t\tBusinessEntityID as integer,\n\t\tPersonType as string,\n\t\tNameStyle as string,\n\t\tTitle as string,\n\t\tFirstName as string,\n\t\tMiddleName as string,\n\t\tLastName as string,\n\t\tSuffix as string,\n\t\tEmailPromotion as integer,\n\t\trowguid as string,\n\t\tModifiedDate as string,\n\t\tZ_PID_ModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\ttruncate: true,\n\tpartitionBy('key',\n\t\t0,\n\t\tZ_PID_ModifiedDate\n\t)) ~> sk02person"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_TAB_Customer')]",
-				"[concat(variables('factoryId'), '/datasets/DS_TAB_Person')]",
-				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_Customer')]",
-				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_Person')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DF - Bike - Customer SQL')]",
@@ -1434,16 +476,14 @@
 								"referenceName": "DS_PAR_BIKE_Customer",
 								"type": "DatasetReference"
 							},
-							"name": "src01customer",
-							"typeProperties": {}
+							"name": "src01customer"
 						},
 						{
 							"dataset": {
 								"referenceName": "DS_PAR_BIKE_Person",
 								"type": "DatasetReference"
 							},
-							"name": "src02person",
-							"typeProperties": {}
+							"name": "src02person"
 						}
 					],
 					"sinks": [
@@ -1474,51 +514,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_Customer')]",
-				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_Person')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_Customer')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_Person')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_TAB_Currency')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_blob1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CSV"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Currency.csv",
-						"folderPath": "oltp",
-						"container": "tmplake"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
 			]
 		},
 		{
@@ -1558,9 +555,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_CurrencyRate')]",
@@ -1623,86 +618,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_Person')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_lake2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DataLake/RAW"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "raw/bike/person",
-						"fileSystem": "lakeg2"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "BusinessEntityID",
-						"type": "INT32"
-					},
-					{
-						"name": "PersonType",
-						"type": "UTF8"
-					},
-					{
-						"name": "NameStyle",
-						"type": "UTF8"
-					},
-					{
-						"name": "Title",
-						"type": "UTF8"
-					},
-					{
-						"name": "FirstName",
-						"type": "UTF8"
-					},
-					{
-						"name": "MiddleName",
-						"type": "UTF8"
-					},
-					{
-						"name": "LastName",
-						"type": "UTF8"
-					},
-					{
-						"name": "Suffix",
-						"type": "UTF8"
-					},
-					{
-						"name": "EmailPromotion",
-						"type": "INT32"
-					},
-					{
-						"name": "rowguid",
-						"type": "UTF8"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "UTF8"
-					},
-					{
-						"name": "Z_PID_ModifiedDate",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_SalesHeader')]",
@@ -1845,9 +761,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DF - Bike - Sales Header Raw')]",
@@ -1865,24 +779,21 @@
 								"referenceName": "DS_TAB_SalesHeader",
 								"type": "DatasetReference"
 							},
-							"name": "src01sales",
-							"typeProperties": {}
+							"name": "src01sales"
 						},
 						{
 							"dataset": {
 								"referenceName": "DS_TAB_Currency",
 								"type": "DatasetReference"
 							},
-							"name": "src02currency",
-							"typeProperties": {}
+							"name": "src02currency"
 						},
 						{
 							"dataset": {
 								"referenceName": "DS_TAB_CurrencyRate",
 								"type": "DatasetReference"
 							},
-							"name": "src03currencyrate",
-							"typeProperties": {}
+							"name": "src03currencyrate"
 						}
 					],
 					"sinks": [
@@ -1932,9 +843,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_TAB_SalesHeader')]",
-				"[concat(variables('factoryId'), '/datasets/DS_TAB_Currency')]",
-				"[concat(variables('factoryId'), '/datasets/DS_TAB_CurrencyRate')]",
 				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_SalesHeader')]",
 				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_Currency')]",
 				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_CurrencyRate')]"
@@ -1956,24 +864,21 @@
 								"referenceName": "DS_PAR_BIKE_SalesHeader",
 								"type": "DatasetReference"
 							},
-							"name": "src01sales",
-							"typeProperties": {}
+							"name": "src01sales"
 						},
 						{
 							"dataset": {
 								"referenceName": "DS_PAR_BIKE_Currency",
 								"type": "DatasetReference"
 							},
-							"name": "src02currency",
-							"typeProperties": {}
+							"name": "src02currency"
 						},
 						{
 							"dataset": {
 								"referenceName": "DS_PAR_BIKE_CurrencyRate",
 								"type": "DatasetReference"
 							},
-							"name": "src03rate",
-							"typeProperties": {}
+							"name": "src03rate"
 						}
 					],
 					"sinks": [
@@ -2021,8 +926,7 @@
 				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_Currency')]",
 				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_CurrencyRate')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_SalesHeader')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_Currency')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_CurrencyRate')]"
+				"[concat(variables('factoryId'), '/datasets/DS_SQL_Currency')]"
 			]
 		},
 		{
@@ -2060,9 +964,7 @@
 					"table": "Currency"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_sqlraiz')]"
-			]
+			"dependsOn": []
 		}
 	]
 }
