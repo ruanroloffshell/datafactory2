@@ -20,7 +20,7 @@
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
 					},
-					"folderPath": "code",
+					"folderPath": "code/bike",
 					"referenceObjects": {
 						"linkedServices": [],
 						"datasets": []
