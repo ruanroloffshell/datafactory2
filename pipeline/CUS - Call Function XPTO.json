@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "bash -c 'echo \"START\" &\ngrep -e ERROR /tmp/zerr.txt  > /dev/null \nif [ $? -eq 0 ]; then echo \"OK\"; else echo \"ERR\"; fi;  \\\necho \"END\" &\nexit 1'",
+					"command": "bash -c 'echo \"START\" &\ngrep -e ERROR /tmp/zerr.txt  > /dev/null \nif [ $? -eq 0 ]; then echo \"OK\"; else echo \"ERR\"; fi;  \\\necho \"END\" &\nexit 0'",
 					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
