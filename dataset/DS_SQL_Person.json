@@ -12,35 +12,46 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "CurrencyRateID",
+				"name": "BusinessEntityID",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "CurrencyRateDate",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
-			},
-			{
-				"name": "FromCurrencyCode",
+				"name": "PersonType",
 				"type": "nchar"
 			},
 			{
-				"name": "ToCurrencyCode",
-				"type": "nchar"
+				"name": "NameStyle",
+				"type": "bit"
 			},
 			{
-				"name": "AverageRate",
-				"type": "money",
-				"precision": 19,
-				"scale": 4
+				"name": "Title",
+				"type": "nvarchar"
 			},
 			{
-				"name": "EndOfDayRate",
-				"type": "money",
-				"precision": 19,
-				"scale": 4
+				"name": "FirstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MiddleName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Suffix",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EmailPromotion",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rowguid",
+				"type": "uniqueidentifier"
 			},
 			{
 				"name": "ModifiedDate",
