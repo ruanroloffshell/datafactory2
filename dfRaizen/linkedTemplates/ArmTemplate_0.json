@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz'"
 		},
-		"serv_batch_accessKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessKey' of 'serv_batch'"
-		},
 		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
 			"defaultValue": "adl://datalakegn1.azuredatalakestore.net/"
@@ -46,14 +42,6 @@
 		"cnn_lake2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
-		},
-		"serv_batch_properties_typeProperties_accountName": {
-			"type": "string",
-			"defaultValue": "batchserver"
-		},
-		"serv_batch_properties_typeProperties_batchUri": {
-			"type": "string",
-			"defaultValue": "https://batchserver.eastus2.batch.azure.com"
 		}
 	},
 	"variables": {
@@ -133,6 +121,112 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_Currency')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cnn_lake2",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DataLake/RAW"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "raw/bike/currency",
+						"fileSystem": "lakeg2"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "CurrencyCode",
+						"type": "UTF8"
+					},
+					{
+						"name": "Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_CurrencyRate')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cnn_lake2",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DataLake/RAW"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "raw/bike/currencyrate",
+						"fileSystem": "lakeg2"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "CurrencyRateID",
+						"type": "INT32"
+					},
+					{
+						"name": "CurrencyRateDate",
+						"type": "INT96"
+					},
+					{
+						"name": "FromCurrencyCode",
+						"type": "UTF8"
+					},
+					{
+						"name": "ToCurrencyCode",
+						"type": "UTF8"
+					},
+					{
+						"name": "AverageRate",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
+					},
+					{
+						"name": "EndOfDayRate",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "UTF8"
+					},
+					{
+						"name": "Z_PID_ModifiedDate",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_Customer')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -187,6 +281,267 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_Person')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cnn_lake2",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DataLake/RAW"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "raw/bike/person",
+						"fileSystem": "lakeg2"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "BusinessEntityID",
+						"type": "INT32"
+					},
+					{
+						"name": "PersonType",
+						"type": "UTF8"
+					},
+					{
+						"name": "NameStyle",
+						"type": "UTF8"
+					},
+					{
+						"name": "Title",
+						"type": "UTF8"
+					},
+					{
+						"name": "FirstName",
+						"type": "UTF8"
+					},
+					{
+						"name": "MiddleName",
+						"type": "UTF8"
+					},
+					{
+						"name": "LastName",
+						"type": "UTF8"
+					},
+					{
+						"name": "Suffix",
+						"type": "UTF8"
+					},
+					{
+						"name": "EmailPromotion",
+						"type": "INT32"
+					},
+					{
+						"name": "rowguid",
+						"type": "UTF8"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "UTF8"
+					},
+					{
+						"name": "Z_PID_ModifiedDate",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_SalesHeader')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cnn_lake2",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DataLake/RAW"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "raw/bike/salesheader",
+						"fileSystem": "lakeg2"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "SalesOrderID",
+						"type": "INT32"
+					},
+					{
+						"name": "RevisionNumber",
+						"type": "INT32"
+					},
+					{
+						"name": "OrderDate",
+						"type": "INT96"
+					},
+					{
+						"name": "DueDate",
+						"type": "INT96"
+					},
+					{
+						"name": "ShipDate",
+						"type": "INT96"
+					},
+					{
+						"name": "Status",
+						"type": "INT32"
+					},
+					{
+						"name": "OnlineOrderFlag",
+						"type": "UTF8"
+					},
+					{
+						"name": "SalesOrderNumber",
+						"type": "UTF8"
+					},
+					{
+						"name": "PurchaseOrderNumber",
+						"type": "UTF8"
+					},
+					{
+						"name": "AccountNumber",
+						"type": "UTF8"
+					},
+					{
+						"name": "CustomerID",
+						"type": "INT32"
+					},
+					{
+						"name": "SalesPersonID",
+						"type": "INT32"
+					},
+					{
+						"name": "TerritoryID",
+						"type": "INT32"
+					},
+					{
+						"name": "BillToAddressID",
+						"type": "INT32"
+					},
+					{
+						"name": "ShipToAddressID",
+						"type": "INT32"
+					},
+					{
+						"name": "ShipMethodID",
+						"type": "INT32"
+					},
+					{
+						"name": "CreditCardID",
+						"type": "INT32"
+					},
+					{
+						"name": "CreditCardApprovalCode",
+						"type": "UTF8"
+					},
+					{
+						"name": "CurrencyRateID",
+						"type": "INT32"
+					},
+					{
+						"name": "SubTotal",
+						"type": "DECIMAL",
+						"precision": 12,
+						"scale": 4
+					},
+					{
+						"name": "TaxAmt",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
+					},
+					{
+						"name": "Freight",
+						"type": "DECIMAL",
+						"precision": 8,
+						"scale": 4
+					},
+					{
+						"name": "TotalDue",
+						"type": "DECIMAL",
+						"precision": 12,
+						"scale": 4
+					},
+					{
+						"name": "Comment",
+						"type": "UTF8"
+					},
+					{
+						"name": "rowguid",
+						"type": "UTF8"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "UTF8"
+					},
+					{
+						"name": "Z_PID_ModifiedDate",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_Currency')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cnn_sqlraiz",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQLServer"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CurrencyCode",
+						"type": "nchar"
+					},
+					{
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ztmp",
+					"table": "Currency"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_sqlraiz')]"
 			]
 		},
 		{
@@ -528,6 +883,47 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_TAB_Currency')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cnn_blob1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CSV"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Currency.csv",
+						"folderPath": "oltp",
+						"container": "tmplake"
+					},
+					"columnDelimiter": "\t",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_TAB_CurrencyRate')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -809,400 +1205,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/serv_batch')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBatch",
-				"typeProperties": {
-					"accountName": "[parameters('serv_batch_properties_typeProperties_accountName')]",
-					"accessKey": {
-						"type": "SecureString",
-						"value": "[parameters('serv_batch_accessKey')]"
-					},
-					"batchUri": "[parameters('serv_batch_properties_typeProperties_batchUri')]",
-					"poolName": "pool01",
-					"linkedServiceName": {
-						"referenceName": "cnn_blobshared",
-						"type": "LinkedServiceReference"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_TAB_Currency')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_blob1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CSV"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Currency.csv",
-						"folderPath": "oltp",
-						"container": "tmplake"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_Currency')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_lake2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DataLake/RAW"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "raw/bike/currency",
-						"fileSystem": "lakeg2"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "CurrencyCode",
-						"type": "UTF8"
-					},
-					{
-						"name": "Name",
-						"type": "UTF8"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_CurrencyRate')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_lake2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DataLake/RAW"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "raw/bike/currencyrate",
-						"fileSystem": "lakeg2"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "CurrencyRateID",
-						"type": "INT32"
-					},
-					{
-						"name": "CurrencyRateDate",
-						"type": "INT96"
-					},
-					{
-						"name": "FromCurrencyCode",
-						"type": "UTF8"
-					},
-					{
-						"name": "ToCurrencyCode",
-						"type": "UTF8"
-					},
-					{
-						"name": "AverageRate",
-						"type": "DECIMAL",
-						"precision": 8,
-						"scale": 4
-					},
-					{
-						"name": "EndOfDayRate",
-						"type": "DECIMAL",
-						"precision": 8,
-						"scale": 4
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "UTF8"
-					},
-					{
-						"name": "Z_PID_ModifiedDate",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_Person')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_lake2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DataLake/RAW"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "raw/bike/person",
-						"fileSystem": "lakeg2"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "BusinessEntityID",
-						"type": "INT32"
-					},
-					{
-						"name": "PersonType",
-						"type": "UTF8"
-					},
-					{
-						"name": "NameStyle",
-						"type": "UTF8"
-					},
-					{
-						"name": "Title",
-						"type": "UTF8"
-					},
-					{
-						"name": "FirstName",
-						"type": "UTF8"
-					},
-					{
-						"name": "MiddleName",
-						"type": "UTF8"
-					},
-					{
-						"name": "LastName",
-						"type": "UTF8"
-					},
-					{
-						"name": "Suffix",
-						"type": "UTF8"
-					},
-					{
-						"name": "EmailPromotion",
-						"type": "INT32"
-					},
-					{
-						"name": "rowguid",
-						"type": "UTF8"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "UTF8"
-					},
-					{
-						"name": "Z_PID_ModifiedDate",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_SalesHeader')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_lake2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DataLake/RAW"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "raw/bike/salesheader",
-						"fileSystem": "lakeg2"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "SalesOrderID",
-						"type": "INT32"
-					},
-					{
-						"name": "RevisionNumber",
-						"type": "INT32"
-					},
-					{
-						"name": "OrderDate",
-						"type": "INT96"
-					},
-					{
-						"name": "DueDate",
-						"type": "INT96"
-					},
-					{
-						"name": "ShipDate",
-						"type": "INT96"
-					},
-					{
-						"name": "Status",
-						"type": "INT32"
-					},
-					{
-						"name": "OnlineOrderFlag",
-						"type": "UTF8"
-					},
-					{
-						"name": "SalesOrderNumber",
-						"type": "UTF8"
-					},
-					{
-						"name": "PurchaseOrderNumber",
-						"type": "UTF8"
-					},
-					{
-						"name": "AccountNumber",
-						"type": "UTF8"
-					},
-					{
-						"name": "CustomerID",
-						"type": "INT32"
-					},
-					{
-						"name": "SalesPersonID",
-						"type": "INT32"
-					},
-					{
-						"name": "TerritoryID",
-						"type": "INT32"
-					},
-					{
-						"name": "BillToAddressID",
-						"type": "INT32"
-					},
-					{
-						"name": "ShipToAddressID",
-						"type": "INT32"
-					},
-					{
-						"name": "ShipMethodID",
-						"type": "INT32"
-					},
-					{
-						"name": "CreditCardID",
-						"type": "INT32"
-					},
-					{
-						"name": "CreditCardApprovalCode",
-						"type": "UTF8"
-					},
-					{
-						"name": "CurrencyRateID",
-						"type": "INT32"
-					},
-					{
-						"name": "SubTotal",
-						"type": "DECIMAL",
-						"precision": 12,
-						"scale": 4
-					},
-					{
-						"name": "TaxAmt",
-						"type": "DECIMAL",
-						"precision": 8,
-						"scale": 4
-					},
-					{
-						"name": "Freight",
-						"type": "DECIMAL",
-						"precision": 8,
-						"scale": 4
-					},
-					{
-						"name": "TotalDue",
-						"type": "DECIMAL",
-						"precision": 12,
-						"scale": 4
-					},
-					{
-						"name": "Comment",
-						"type": "UTF8"
-					},
-					{
-						"name": "rowguid",
-						"type": "UTF8"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "UTF8"
-					},
-					{
-						"name": "Z_PID_ModifiedDate",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
 			]
 		}
 	]

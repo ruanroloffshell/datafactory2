@@ -36,10 +36,10 @@
 			"value": "https://lakestorageg2.dfs.core.windows.net"
 		},
 		"serv_batch_properties_typeProperties_accountName": {
-			"value": "batchserver"
+			"value": "batchbigdataca"
 		},
 		"serv_batch_properties_typeProperties_batchUri": {
-			"value": "https://batchserver.eastus2.batch.azure.com"
+			"value": "https://batchbigdataca.canadacentral.batch.azure.com"
 		},
 		"containerUri": {
 			"value": ""

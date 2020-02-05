@@ -49,11 +49,11 @@
 		},
 		"serv_batch_properties_typeProperties_accountName": {
 			"type": "string",
-			"defaultValue": "batchserver"
+			"defaultValue": "batchbigdataca"
 		},
 		"serv_batch_properties_typeProperties_batchUri": {
 			"type": "string",
-			"defaultValue": "https://batchserver.eastus2.batch.azure.com"
+			"defaultValue": "https://batchbigdataca.canadacentral.batch.azure.com"
 		},
 		"containerUri": {
 			"type": "string",
@@ -94,9 +94,6 @@
 					"cnn_sqlraiz_connectionString": {
 						"value": "[parameters('cnn_sqlraiz_connectionString')]"
 					},
-					"serv_batch_accessKey": {
-						"value": "[parameters('serv_batch_accessKey')]"
-					},
 					"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 						"value": "[parameters('cnn_lake1_properties_typeProperties_dataLakeStoreUri')]"
 					},
@@ -111,12 +108,6 @@
 					},
 					"cnn_lake2_properties_typeProperties_url": {
 						"value": "[parameters('cnn_lake2_properties_typeProperties_url')]"
-					},
-					"serv_batch_properties_typeProperties_accountName": {
-						"value": "[parameters('serv_batch_properties_typeProperties_accountName')]"
-					},
-					"serv_batch_properties_typeProperties_batchUri": {
-						"value": "[parameters('serv_batch_properties_typeProperties_batchUri')]"
 					}
 				}
 			},
@@ -135,6 +126,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"serv_batch_accessKey": {
+						"value": "[parameters('serv_batch_accessKey')]"
+					},
+					"serv_batch_properties_typeProperties_accountName": {
+						"value": "[parameters('serv_batch_properties_typeProperties_accountName')]"
+					},
+					"serv_batch_properties_typeProperties_batchUri": {
+						"value": "[parameters('serv_batch_properties_typeProperties_batchUri')]"
 					}
 				}
 			},
