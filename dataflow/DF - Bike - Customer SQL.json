@@ -2,7 +2,7 @@
 	"name": "DF - Bike - Customer SQL",
 	"properties": {
 		"folder": {
-			"name": "Sales"
+			"name": "Sales/Database"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {

@@ -2,7 +2,7 @@
 	"name": "DF - Bike - Sales Header SQL",
 	"properties": {
 		"folder": {
-			"name": "Sales"
+			"name": "Sales/Database"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {

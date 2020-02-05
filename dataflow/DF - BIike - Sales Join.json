@@ -1,6 +1,9 @@
 {
 	"name": "DF - BIike - Sales Join",
 	"properties": {
+		"folder": {
+			"name": "Sales/App"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [],

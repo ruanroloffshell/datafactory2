@@ -2,7 +2,7 @@
 	"name": "DF - Bike - Customer Raw",
 	"properties": {
 		"folder": {
-			"name": "Sales"
+			"name": "Sales/Raw"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
