@@ -1,0 +1,34 @@
+{
+	"name": "DS_SQL_Currency",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "cnn_sqlraiz",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLServer"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CurrencyCode",
+				"type": "nchar"
+			},
+			{
+				"name": "Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ztmp",
+			"table": "Currency"
+		}
+	}
+}
