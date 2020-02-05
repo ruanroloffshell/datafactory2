@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Spark1",
-				"type": "HDInsightSpark",
+				"name": "Custom1",
+				"type": "Custom",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -15,12 +15,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"rootPath": "code/bikespark",
-					"entryFilePath": "word.py",
-					"sparkJobLinkedService": {
+					"command": "echo \"teste\"",
+					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
+					},
+					"folderPath": "code",
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
 					}
+				},
+				"linkedServiceName": {
+					"referenceName": "serv_batch",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
