@@ -1,5 +1,5 @@
 {
-	"name": "DS_PAR_BIKE_JoinSales",
+	"name": "DS_PAR_BIKE_SalesJoin",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "cnn_lake2",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "application/myapp",
+				"folderPath": "application/myapp/salesjoin",
 				"fileSystem": "lakeg2"
 			},
 			"compressionCodec": "snappy"
