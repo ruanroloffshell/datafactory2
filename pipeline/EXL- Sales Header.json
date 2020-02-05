@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Custom1",
-				"type": "Custom",
+				"name": "DF - Bike - Sales Header Raw",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -15,20 +15,14 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "echo \"teste\"",
-					"resourceLinkedService": {
-						"referenceName": "cnn_blobshared",
-						"type": "LinkedServiceReference"
+					"dataflow": {
+						"referenceName": "DF - Bike - Sales Header Raw",
+						"type": "DataFlowReference"
 					},
-					"folderPath": "code",
-					"referenceObjects": {
-						"linkedServices": [],
-						"datasets": []
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					}
-				},
-				"linkedServiceName": {
-					"referenceName": "serv_batch",
-					"type": "LinkedServiceReference"
 				}
 			}
 		],
