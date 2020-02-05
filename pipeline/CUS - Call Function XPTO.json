@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "bash -c \"grep -e ERROR /tmp/zerr.txt  > /dev/null &&  if [ $? -eq 0 ]  then echo 'The script ran ok' exit 0 else echo 'The script failed' >&2 exit 1 fi\"",
+					"command": "bash -c \"grep -e ERROR /tmp/zerr.txt  > /dev/null \\ \nif [ $? -eq 0 ]  then echo 'The script ran ok' exit 0 else echo 'The script failed' >&2 exit 1 fi\"",
 					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
