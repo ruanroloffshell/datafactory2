@@ -42,6 +42,10 @@
 		"cnn_lake2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
+		},
+		"key_corp_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keybigdata.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -116,6 +120,19 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('cnn_sqlraiz_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/key_corp')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('key_corp_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
@@ -1055,116 +1072,6 @@
 					"quoteChar": "\""
 				},
 				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blob1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_TAB_SalesHeader')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_blob1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CSV"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "SalesOrderHeader.csv",
-						"folderPath": "oltp",
-						"container": "tmplake"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
 					{
 						"type": "String"
 					},

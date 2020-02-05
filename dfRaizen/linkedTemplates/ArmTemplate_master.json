@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessKey' of 'serv_batch'"
 		},
+		"cnn_sqlraiz_withkey_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz_withkey'"
+		},
 		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
 			"defaultValue": "adl://datalakegn1.azuredatalakestore.net/"
@@ -54,6 +58,14 @@
 		"serv_batch_properties_typeProperties_batchUri": {
 			"type": "string",
 			"defaultValue": "https://batchbigdataca.canadacentral.batch.azure.com"
+		},
+		"key_corp_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keybigdata.vault.azure.net/"
+		},
+		"cnn_lakeg2_corp_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"type": "string",
@@ -108,6 +120,9 @@
 					},
 					"cnn_lake2_properties_typeProperties_url": {
 						"value": "[parameters('cnn_lake2_properties_typeProperties_url')]"
+					},
+					"key_corp_properties_typeProperties_baseUrl": {
+						"value": "[parameters('key_corp_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
@@ -130,16 +145,42 @@
 					"serv_batch_accessKey": {
 						"value": "[parameters('serv_batch_accessKey')]"
 					},
+					"cnn_sqlraiz_withkey_connectionString": {
+						"value": "[parameters('cnn_sqlraiz_withkey_connectionString')]"
+					},
 					"serv_batch_properties_typeProperties_accountName": {
 						"value": "[parameters('serv_batch_properties_typeProperties_accountName')]"
 					},
 					"serv_batch_properties_typeProperties_batchUri": {
 						"value": "[parameters('serv_batch_properties_typeProperties_batchUri')]"
+					},
+					"cnn_lakeg2_corp_properties_typeProperties_url": {
+						"value": "[parameters('cnn_lakeg2_corp_properties_typeProperties_url')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_1')]"
 			]
 		}
 	]

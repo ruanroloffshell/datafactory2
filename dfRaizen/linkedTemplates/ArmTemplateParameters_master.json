@@ -20,6 +20,9 @@
 		"serv_batch_accessKey": {
 			"value": ""
 		},
+		"cnn_sqlraiz_withkey_connectionString": {
+			"value": ""
+		},
 		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 			"value": "adl://datalakegn1.azuredatalakestore.net/"
 		},
@@ -40,6 +43,12 @@
 		},
 		"serv_batch_properties_typeProperties_batchUri": {
 			"value": "https://batchbigdataca.canadacentral.batch.azure.com"
+		},
+		"key_corp_properties_typeProperties_baseUrl": {
+			"value": "https://keybigdata.vault.azure.net/"
+		},
+		"cnn_lakeg2_corp_properties_typeProperties_url": {
+			"value": "https://lakestorageg2.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"value": ""
