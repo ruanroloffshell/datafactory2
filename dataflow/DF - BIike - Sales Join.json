@@ -25,7 +25,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_PAR_BIKE_JoinSales",
+						"referenceName": "DS_PAR_BIKE_SalesJoin",
 						"type": "DatasetReference"
 					},
 					"name": "sk01salesjoin"
