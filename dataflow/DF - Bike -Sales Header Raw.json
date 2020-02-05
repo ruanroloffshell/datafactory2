@@ -1,0 +1,15 @@
+{
+	"name": "DF - Bike -Sales Header Raw",
+	"properties": {
+		"folder": {
+			"name": "Sales"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
