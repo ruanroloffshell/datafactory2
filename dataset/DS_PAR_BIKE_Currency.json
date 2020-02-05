@@ -20,27 +20,11 @@
 		},
 		"schema": [
 			{
-				"name": "CustomerID",
-				"type": "INT32"
-			},
-			{
-				"name": "PersonID",
-				"type": "INT32"
-			},
-			{
-				"name": "StoreID",
-				"type": "INT32"
-			},
-			{
-				"name": "TerritoryID",
-				"type": "INT32"
-			},
-			{
-				"name": "AccountNumber",
+				"name": "CurrencyCode",
 				"type": "UTF8"
 			},
 			{
-				"name": "rowguid",
+				"name": "Name",
 				"type": "UTF8"
 			},
 			{

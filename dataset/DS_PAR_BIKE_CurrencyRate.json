@@ -20,31 +20,39 @@
 		},
 		"schema": [
 			{
-				"name": "CustomerID",
+				"name": "CurrencyRateID",
 				"type": "INT32"
 			},
 			{
-				"name": "PersonID",
-				"type": "INT32"
+				"name": "CurrencyRateDate",
+				"type": "INT96"
 			},
 			{
-				"name": "StoreID",
-				"type": "INT32"
-			},
-			{
-				"name": "TerritoryID",
-				"type": "INT32"
-			},
-			{
-				"name": "AccountNumber",
+				"name": "FromCurrencyCode",
 				"type": "UTF8"
 			},
 			{
-				"name": "rowguid",
+				"name": "ToCurrencyCode",
 				"type": "UTF8"
+			},
+			{
+				"name": "AverageRate",
+				"type": "DECIMAL",
+				"precision": 8,
+				"scale": 4
+			},
+			{
+				"name": "EndOfDayRate",
+				"type": "DECIMAL",
+				"precision": 8,
+				"scale": 4
 			},
 			{
 				"name": "ModifiedDate",
+				"type": "UTF8"
+			},
+			{
+				"name": "Z_PID_ModifiedDate",
 				"type": "UTF8"
 			}
 		]
