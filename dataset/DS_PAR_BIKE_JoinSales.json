@@ -1,0 +1,23 @@
+{
+	"name": "DS_PAR_BIKE_JoinSales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "cnn_lake2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DataLake/APP"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "application/myapp",
+				"fileSystem": "lakeg2"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
