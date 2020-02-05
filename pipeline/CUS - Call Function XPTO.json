@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "bash -c \"grep -e ERROR /tmp/zerr.txt  > /dev/null \\ \nif [ $? -eq 0 ]  then  exit 0 else  exit 1 fi\"",
+					"command": "bash -c \"grep -e ERROR /tmp/zerr.txt  > /dev/null \\ \nif [ $? -eq 0 ]  \\ \nthen  \\ \nexit 0 \\ \nelse  \\ \nexit 1 \\ \nfi\"",
 					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
