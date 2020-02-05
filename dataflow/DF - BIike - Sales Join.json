@@ -6,10 +6,40 @@
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
-			"sinks": [],
-			"transformations": [],
-			"script": ""
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_PAR_BIKE_SalesHeader",
+						"type": "DatasetReference"
+					},
+					"name": "src01sales"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_PAR_BIKE_CurrencyRate",
+						"type": "DatasetReference"
+					},
+					"name": "src02rate"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_PAR_BIKE_JoinSales",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "Select1"
+				}
+			],
+			"script": "source(output(\n\t\tSalesOrderID as integer,\n\t\tRevisionNumber as integer,\n\t\tOrderDate as timestamp,\n\t\tDueDate as timestamp,\n\t\tShipDate as timestamp,\n\t\tStatus as integer,\n\t\tOnlineOrderFlag as string,\n\t\tSalesOrderNumber as string,\n\t\tPurchaseOrderNumber as string,\n\t\tAccountNumber as string,\n\t\tCustomerID as integer,\n\t\tSalesPersonID as integer,\n\t\tTerritoryID as integer,\n\t\tBillToAddressID as integer,\n\t\tShipToAddressID as integer,\n\t\tShipMethodID as integer,\n\t\tCreditCardID as integer,\n\t\tCreditCardApprovalCode as string,\n\t\tCurrencyRateID as integer,\n\t\tSubTotal as decimal(12,4),\n\t\tTaxAmt as decimal(8,4),\n\t\tFreight as decimal(8,4),\n\t\tTotalDue as decimal(12,4),\n\t\tComment as string,\n\t\trowguid as string,\n\t\tModifiedDate as string,\n\t\tZ_PID_ModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> src01sales\nsource(output(\n\t\tCurrencyRateID as integer,\n\t\tCurrencyRateDate as timestamp,\n\t\tFromCurrencyCode as string,\n\t\tToCurrencyCode as string,\n\t\tAverageRate as decimal(8,4),\n\t\tEndOfDayRate as decimal(8,4),\n\t\tModifiedDate as string,\n\t\tZ_PID_ModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> src02rate\nsrc01sales, src02rate join(src01sales@CurrencyRateID == src02rate@CurrencyRateID,\n\tjoinType:'inner',\n\tbroadcast: 'right')~> Join1\nJoin1 select(mapColumn(\n\t\tSalesOrderID,\n\t\tRevisionNumber,\n\t\tOrderDate,\n\t\tDueDate,\n\t\tSalesOrderNumber,\n\t\tPurchaseOrderNumber,\n\t\tAccountNumber,\n\t\tCustomerID,\n\t\tSubTotal,\n\t\tTaxAmt,\n\t\tFreight,\n\t\tCurrencyRateDate,\n\t\tFromCurrencyCode,\n\t\tToCurrencyCode,\n\t\tAverageRate,\n\t\tEndOfDayRate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
