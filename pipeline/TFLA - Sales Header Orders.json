@@ -15,7 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "echo \"teste\"",
+					"command": {
+						"value": "ls -l",
+						"type": "Expression"
+					},
 					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
