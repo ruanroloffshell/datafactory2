@@ -71,8 +71,8 @@
 				}
 			},
 			{
-				"name": "Custom1_copy2",
-				"type": "Custom",
+				"name": "Azure Function1",
+				"type": "AzureFunctionActivity",
 				"dependsOn": [
 					{
 						"activity": "Custom1",
@@ -90,22 +90,15 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": {
-						"value": "@concat('echo ', activity('Custom1').output)",
+					"functionName": "httpLog",
+					"method": "POST",
+					"body": {
+						"value": "@concat('{\"name\":\"', activity('Custom1').output, '\"}')",
 						"type": "Expression"
-					},
-					"resourceLinkedService": {
-						"referenceName": "cnn_blobshared",
-						"type": "LinkedServiceReference"
-					},
-					"folderPath": "code",
-					"referenceObjects": {
-						"linkedServices": [],
-						"datasets": []
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "serv_batch",
+					"referenceName": "serv_pythonfunc",
 					"type": "LinkedServiceReference"
 				}
 			}
