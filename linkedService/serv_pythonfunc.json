@@ -1,0 +1,12 @@
+{
+	"name": "serv_pythonfunc",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureFunction",
+		"typeProperties": {
+			"functionAppUrl": "https://fncbigdata.azurewebsites.net",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRGUkFJWkVOXzY1NmI2MWI0LWI4MDMtNDE2MS1hNDY3LTRiMTM0ZDE0ODBiYyINCn0="
+		}
+	}
+}
