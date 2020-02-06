@@ -15,7 +15,82 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "echo \"teste\"",
+					"command": "echo \"teste\" ls -l",
+					"resourceLinkedService": {
+						"referenceName": "cnn_blobshared",
+						"type": "LinkedServiceReference"
+					},
+					"folderPath": "code",
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "serv_batch",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Custom1_copy1",
+				"type": "Custom",
+				"dependsOn": [
+					{
+						"activity": "Custom1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": "echo @activity('Custom1').output",
+					"resourceLinkedService": {
+						"referenceName": "cnn_blobshared",
+						"type": "LinkedServiceReference"
+					},
+					"folderPath": "code",
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "serv_batch",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Custom1_copy2",
+				"type": "Custom",
+				"dependsOn": [
+					{
+						"activity": "Custom1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": {
+						"value": "echo @activity('Custom1').output",
+						"type": "Expression"
+					},
 					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
