@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "CUS - Extract Data From HR SYS",
 	"properties": {
 		"activities": [
 			{
@@ -92,9 +92,6 @@
 				"typeProperties": {
 					"functionName": "httpLog",
 					"method": "POST",
-					"headers": {
-						"logmsg": "aaa"
-					},
 					"body": {
 						"value": "@concat('{\"logmsg\":\"[',activity('cus_step01').output,']\"}')",
 						"type": "Expression"
