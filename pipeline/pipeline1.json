@@ -92,8 +92,11 @@
 				"typeProperties": {
 					"functionName": "httpLog",
 					"method": "POST",
+					"headers": {
+						"logmsg": "aaa"
+					},
 					"body": {
-						"value": "@trim(concat(variables('var1'),activity('cus_step01').output,variables('var2')))\n\n",
+						"value": "\n\n",
 						"type": "Expression"
 					}
 				},
