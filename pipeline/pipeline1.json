@@ -51,7 +51,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "echo @activity('Custom1').output",
+					"command": {
+						"value": "@concat('echo ', activity('Custom1').output)",
+						"type": "Expression"
+					},
 					"resourceLinkedService": {
 						"referenceName": "cnn_blobshared",
 						"type": "LinkedServiceReference"
