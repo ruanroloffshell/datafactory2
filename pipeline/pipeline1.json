@@ -88,11 +88,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "pro1"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"functionName": "httpLog",
 					"method": "POST",
