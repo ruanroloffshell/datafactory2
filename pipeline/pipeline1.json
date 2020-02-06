@@ -52,7 +52,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"command": {
-						"value": "@concat('echo ', activity('Custom1').output)",
+						"value": "@concat('echo ', activity('cus_step01').output)",
 						"type": "Expression"
 					},
 					"resourceLinkedService": {
@@ -93,7 +93,8 @@
 					"functionName": "httpLog",
 					"method": "POST",
 					"body": {
-						"logmsg": "teste"
+						"value": "@concat('{\"logmsg\":\"',activity('cus_step01').output,'\"}')",
+						"type": "Expression"
 					}
 				},
 				"linkedServiceName": {
