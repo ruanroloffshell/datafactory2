@@ -88,12 +88,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "pro1"
+					}
+				],
 				"typeProperties": {
 					"functionName": "httpLog",
 					"method": "POST",
 					"body": {
-						"value": "@concat('{\"logmsg\":\"[',activity('cus_step01').output,']\"}')",
+						"value": "@trim(concat(variables('var1'),activity('cus_step01').output,variables('var2')))\n\n",
 						"type": "Expression"
 					}
 				},
@@ -103,6 +107,16 @@
 				}
 			}
 		],
+		"variables": {
+			"var1": {
+				"type": "String",
+				"defaultValue": "{\"logmsg\":\"["
+			},
+			"var2": {
+				"type": "String",
+				"defaultValue": "]\"}"
+			}
+		},
 		"folder": {
 			"name": "HR"
 		},
