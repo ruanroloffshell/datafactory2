@@ -93,7 +93,7 @@
 					"functionName": "httpLog",
 					"method": "POST",
 					"body": {
-						"value": "@concat('{\"logmsg\":\"',activity('cus_step01').output,'\"}')",
+						"value": "@concat('{\"logmsg\":\"[',activity('cus_step01').output,']\"}')",
 						"type": "Expression"
 					}
 				},
