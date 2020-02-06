@@ -96,7 +96,7 @@
 						"logmsg": "aaa"
 					},
 					"body": {
-						"value": "\n\n",
+						"value": "@concat('{\"logmsg\":\"[',activity('cus_step01').output,']\"}')",
 						"type": "Expression"
 					}
 				},
@@ -106,16 +106,6 @@
 				}
 			}
 		],
-		"variables": {
-			"var1": {
-				"type": "String",
-				"defaultValue": "{\"logmsg\":\"["
-			},
-			"var2": {
-				"type": "String",
-				"defaultValue": "]\"}"
-			}
-		},
 		"folder": {
 			"name": "HR"
 		},
