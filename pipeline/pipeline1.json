@@ -91,7 +91,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"command": {
-						"value": "echo @activity('Custom1').output",
+						"value": "@concat('echo ', activity('Custom1').output)",
 						"type": "Expression"
 					},
 					"resourceLinkedService": {
