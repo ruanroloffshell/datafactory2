@@ -23,13 +23,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz'"
 		},
+		"cnn_sqlraiz_withkey_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz_withkey'"
+		},
 		"serv_batch_accessKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessKey' of 'serv_batch'"
 		},
-		"cnn_sqlraiz_withkey_connectionString": {
+		"serv_pythonfunc_functionKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz_withkey'"
+			"metadata": "Secure string for 'functionKey' of 'serv_pythonfunc'"
 		},
 		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
@@ -51,6 +55,14 @@
 			"type": "string",
 			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
 		},
+		"cnn_lakeg2_corp_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
+		},
+		"key_corp_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keybigdata.vault.azure.net/"
+		},
 		"serv_batch_properties_typeProperties_accountName": {
 			"type": "string",
 			"defaultValue": "batchbigdataca"
@@ -58,14 +70,6 @@
 		"serv_batch_properties_typeProperties_batchUri": {
 			"type": "string",
 			"defaultValue": "https://batchbigdataca.canadacentral.batch.azure.com"
-		},
-		"key_corp_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://keybigdata.vault.azure.net/"
-		},
-		"cnn_lakeg2_corp_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -403,6 +407,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SKV - VariableName')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Custom1",
+						"type": "Custom",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"command": "echo \"teste\"",
+							"resourceLinkedService": {
+								"referenceName": "cnn_blobshared",
+								"type": "LinkedServiceReference"
+							},
+							"folderPath": "code",
+							"referenceObjects": {
+								"linkedServices": [],
+								"datasets": []
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "serv_batch",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "Sales/Bike"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
+				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TFLA - Sales Header Orders')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -584,7 +634,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"command": "echo \"teste\"",
+							"command": "ls -l && pwd",
 							"resourceLinkedService": {
 								"referenceName": "cnn_blobshared",
 								"type": "LinkedServiceReference"
@@ -599,6 +649,77 @@
 							"referenceName": "serv_batch",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "Custom1_copy1",
+						"type": "Custom",
+						"dependsOn": [
+							{
+								"activity": "Custom1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"command": {
+								"value": "@concat('echo ', activity('Custom1').output)",
+								"type": "Expression"
+							},
+							"resourceLinkedService": {
+								"referenceName": "cnn_blobshared",
+								"type": "LinkedServiceReference"
+							},
+							"folderPath": "code",
+							"referenceObjects": {
+								"linkedServices": [],
+								"datasets": []
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "serv_batch",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Azure Function1",
+						"type": "AzureFunctionActivity",
+						"dependsOn": [
+							{
+								"activity": "Custom1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"functionName": "httpLog",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"logmsg": "teste"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "serv_pythonfunc",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"folder": {
@@ -608,7 +729,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
+				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]",
+				"[concat(variables('factoryId'), '/linkedServices/serv_pythonfunc')]"
 			]
 		},
 		{
@@ -1083,6 +1205,34 @@
 						"type": "UTF8"
 					}
 				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_SalesJoin')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "cnn_lake2",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DataLake/APP"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "application/myapp/salesjoin",
+						"fileSystem": "lakeg2"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
@@ -1850,6 +2000,29 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/cnn_lakeg2_corp')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('cnn_lakeg2_corp_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "key_corp",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "keyblobbigdata2"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/key_corp')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/cnn_sqlraiz')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -1858,6 +2031,32 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('cnn_sqlraiz_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cnn_sqlraiz_withkey')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('cnn_sqlraiz_withkey_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/key_corp')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('key_corp_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
@@ -1885,6 +2084,60 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF - BIike - Sales Join')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Sales/App"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_PAR_BIKE_SalesHeader",
+								"type": "DatasetReference"
+							},
+							"name": "src01sales",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_PAR_BIKE_CurrencyRate",
+								"type": "DatasetReference"
+							},
+							"name": "src02rate",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_PAR_BIKE_SalesJoin",
+								"type": "DatasetReference"
+							},
+							"name": "sk01salesjoin"
+						}
+					],
+					"transformations": [
+						{
+							"name": "slc01sales"
+						},
+						{
+							"name": "jn01sales"
+						}
+					],
+					"script": "source(output(\n\t\tSalesOrderID as integer,\n\t\tRevisionNumber as integer,\n\t\tOrderDate as timestamp,\n\t\tDueDate as timestamp,\n\t\tShipDate as timestamp,\n\t\tStatus as integer,\n\t\tOnlineOrderFlag as string,\n\t\tSalesOrderNumber as string,\n\t\tPurchaseOrderNumber as string,\n\t\tAccountNumber as string,\n\t\tCustomerID as integer,\n\t\tSalesPersonID as integer,\n\t\tTerritoryID as integer,\n\t\tBillToAddressID as integer,\n\t\tShipToAddressID as integer,\n\t\tShipMethodID as integer,\n\t\tCreditCardID as integer,\n\t\tCreditCardApprovalCode as string,\n\t\tCurrencyRateID as integer,\n\t\tSubTotal as decimal(12,4),\n\t\tTaxAmt as decimal(8,4),\n\t\tFreight as decimal(8,4),\n\t\tTotalDue as decimal(12,4),\n\t\tComment as string,\n\t\trowguid as string,\n\t\tModifiedDate as string,\n\t\tZ_PID_ModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> src01sales\nsource(output(\n\t\tCurrencyRateID as integer,\n\t\tCurrencyRateDate as timestamp,\n\t\tFromCurrencyCode as string,\n\t\tToCurrencyCode as string,\n\t\tAverageRate as decimal(8,4),\n\t\tEndOfDayRate as decimal(8,4),\n\t\tModifiedDate as string,\n\t\tZ_PID_ModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> src02rate\njn01sales select(mapColumn(\n\t\tSalesOrderID,\n\t\tRevisionNumber,\n\t\tOrderDate,\n\t\tStatus,\n\t\tSalesOrderNumber,\n\t\tAccountNumber,\n\t\tCustomerID,\n\t\tSubTotal,\n\t\tTaxAmt,\n\t\tFreight,\n\t\tTotalDue,\n\t\tCurrencyRateDate,\n\t\tFromCurrencyCode,\n\t\tToCurrencyCode,\n\t\tAverageRate,\n\t\tEndOfDayRate,\n\t\tZ_PID_ModifiedDate = src01sales@Z_PID_ModifiedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> slc01sales\nsrc01sales, src02rate join(src01sales@CurrencyRateID == src02rate@CurrencyRateID,\n\tjoinType:'inner',\n\tbroadcast: 'right')~> jn01sales\nslc01sales sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionBy('key',\n\t\t0,\n\t\tZ_PID_ModifiedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sk01salesjoin"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_SalesHeader')]",
+				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_CurrencyRate')]",
+				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_SalesJoin')]"
 			]
 		},
 		{
@@ -2194,191 +2447,21 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SKV - VariableName')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Custom1",
-						"type": "Custom",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": "echo \"teste\"",
-							"resourceLinkedService": {
-								"referenceName": "cnn_blobshared",
-								"type": "LinkedServiceReference"
-							},
-							"folderPath": "code",
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "serv_batch",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Sales/Bike"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_blobshared')]",
-				"[concat(variables('factoryId'), '/linkedServices/serv_batch')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PAR_BIKE_SalesJoin')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "cnn_lake2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "DataLake/APP"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "application/myapp/salesjoin",
-						"fileSystem": "lakeg2"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/cnn_lake2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DF - BIike - Sales Join')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "Sales/App"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_PAR_BIKE_SalesHeader",
-								"type": "DatasetReference"
-							},
-							"name": "src01sales",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_PAR_BIKE_CurrencyRate",
-								"type": "DatasetReference"
-							},
-							"name": "src02rate",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_PAR_BIKE_SalesJoin",
-								"type": "DatasetReference"
-							},
-							"name": "sk01salesjoin"
-						}
-					],
-					"transformations": [
-						{
-							"name": "slc01sales"
-						},
-						{
-							"name": "jn01sales"
-						}
-					],
-					"script": "source(output(\n\t\tSalesOrderID as integer,\n\t\tRevisionNumber as integer,\n\t\tOrderDate as timestamp,\n\t\tDueDate as timestamp,\n\t\tShipDate as timestamp,\n\t\tStatus as integer,\n\t\tOnlineOrderFlag as string,\n\t\tSalesOrderNumber as string,\n\t\tPurchaseOrderNumber as string,\n\t\tAccountNumber as string,\n\t\tCustomerID as integer,\n\t\tSalesPersonID as integer,\n\t\tTerritoryID as integer,\n\t\tBillToAddressID as integer,\n\t\tShipToAddressID as integer,\n\t\tShipMethodID as integer,\n\t\tCreditCardID as integer,\n\t\tCreditCardApprovalCode as string,\n\t\tCurrencyRateID as integer,\n\t\tSubTotal as decimal(12,4),\n\t\tTaxAmt as decimal(8,4),\n\t\tFreight as decimal(8,4),\n\t\tTotalDue as decimal(12,4),\n\t\tComment as string,\n\t\trowguid as string,\n\t\tModifiedDate as string,\n\t\tZ_PID_ModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> src01sales\nsource(output(\n\t\tCurrencyRateID as integer,\n\t\tCurrencyRateDate as timestamp,\n\t\tFromCurrencyCode as string,\n\t\tToCurrencyCode as string,\n\t\tAverageRate as decimal(8,4),\n\t\tEndOfDayRate as decimal(8,4),\n\t\tModifiedDate as string,\n\t\tZ_PID_ModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> src02rate\njn01sales select(mapColumn(\n\t\tSalesOrderID,\n\t\tRevisionNumber,\n\t\tOrderDate,\n\t\tStatus,\n\t\tSalesOrderNumber,\n\t\tAccountNumber,\n\t\tCustomerID,\n\t\tSubTotal,\n\t\tTaxAmt,\n\t\tFreight,\n\t\tTotalDue,\n\t\tCurrencyRateDate,\n\t\tFromCurrencyCode,\n\t\tToCurrencyCode,\n\t\tAverageRate,\n\t\tEndOfDayRate,\n\t\tZ_PID_ModifiedDate = src01sales@Z_PID_ModifiedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> slc01sales\nsrc01sales, src02rate join(src01sales@CurrencyRateID == src02rate@CurrencyRateID,\n\tjoinType:'inner',\n\tbroadcast: 'right')~> jn01sales\nslc01sales sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionBy('key',\n\t\t0,\n\t\tZ_PID_ModifiedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sk01salesjoin"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_SalesHeader')]",
-				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_CurrencyRate')]",
-				"[concat(variables('factoryId'), '/datasets/DS_PAR_BIKE_SalesJoin')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/key_corp')]",
+			"name": "[concat(parameters('factoryName'), '/serv_pythonfunc')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "AzureKeyVault",
+				"type": "AzureFunction",
 				"typeProperties": {
-					"baseUrl": "[parameters('key_corp_properties_typeProperties_baseUrl')]"
+					"functionAppUrl": "https://fncbigdata.azurewebsites.net",
+					"functionKey": {
+						"type": "SecureString",
+						"value": "[parameters('serv_pythonfunc_functionKey')]"
+					}
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cnn_lakeg2_corp')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('cnn_lakeg2_corp_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "key_corp",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "keyblobbigdata2"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/key_corp')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/cnn_sqlraiz_withkey')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('cnn_sqlraiz_withkey_connectionString')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "key_corp",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "keysqlraiz"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/key_corp')]"
-			]
 		}
 	]
 }

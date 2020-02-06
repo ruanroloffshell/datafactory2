@@ -23,13 +23,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz'"
 		},
+		"cnn_sqlraiz_withkey_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz_withkey'"
+		},
 		"serv_batch_accessKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessKey' of 'serv_batch'"
 		},
-		"cnn_sqlraiz_withkey_connectionString": {
+		"serv_pythonfunc_functionKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'cnn_sqlraiz_withkey'"
+			"metadata": "Secure string for 'functionKey' of 'serv_pythonfunc'"
 		},
 		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
@@ -51,6 +55,14 @@
 			"type": "string",
 			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
 		},
+		"cnn_lakeg2_corp_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
+		},
+		"key_corp_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keybigdata.vault.azure.net/"
+		},
 		"serv_batch_properties_typeProperties_accountName": {
 			"type": "string",
 			"defaultValue": "batchbigdataca"
@@ -58,14 +70,6 @@
 		"serv_batch_properties_typeProperties_batchUri": {
 			"type": "string",
 			"defaultValue": "https://batchbigdataca.canadacentral.batch.azure.com"
-		},
-		"key_corp_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://keybigdata.vault.azure.net/"
-		},
-		"cnn_lakeg2_corp_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://lakestorageg2.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"type": "string",
@@ -106,6 +110,12 @@
 					"cnn_sqlraiz_connectionString": {
 						"value": "[parameters('cnn_sqlraiz_connectionString')]"
 					},
+					"cnn_sqlraiz_withkey_connectionString": {
+						"value": "[parameters('cnn_sqlraiz_withkey_connectionString')]"
+					},
+					"serv_pythonfunc_functionKey": {
+						"value": "[parameters('serv_pythonfunc_functionKey')]"
+					},
 					"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
 						"value": "[parameters('cnn_lake1_properties_typeProperties_dataLakeStoreUri')]"
 					},
@@ -145,17 +155,14 @@
 					"serv_batch_accessKey": {
 						"value": "[parameters('serv_batch_accessKey')]"
 					},
-					"cnn_sqlraiz_withkey_connectionString": {
-						"value": "[parameters('cnn_sqlraiz_withkey_connectionString')]"
+					"cnn_lakeg2_corp_properties_typeProperties_url": {
+						"value": "[parameters('cnn_lakeg2_corp_properties_typeProperties_url')]"
 					},
 					"serv_batch_properties_typeProperties_accountName": {
 						"value": "[parameters('serv_batch_properties_typeProperties_accountName')]"
 					},
 					"serv_batch_properties_typeProperties_batchUri": {
 						"value": "[parameters('serv_batch_properties_typeProperties_batchUri')]"
-					},
-					"cnn_lakeg2_corp_properties_typeProperties_url": {
-						"value": "[parameters('cnn_lakeg2_corp_properties_typeProperties_url')]"
 					}
 				}
 			},
