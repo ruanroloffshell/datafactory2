@@ -93,8 +93,7 @@
 					"functionName": "httpLog",
 					"method": "POST",
 					"body": {
-						"value": "@concat('{\"name\":\"', activity('Custom1').output, '\"}')",
-						"type": "Expression"
+						"name": "teste"
 					}
 				},
 				"linkedServiceName": {
