@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Custom1",
+				"name": "cus_step01",
 				"type": "Custom",
 				"dependsOn": [],
 				"policy": {
@@ -32,11 +32,11 @@
 				}
 			},
 			{
-				"name": "Custom1_copy1",
+				"name": "cus_step02",
 				"type": "Custom",
 				"dependsOn": [
 					{
-						"activity": "Custom1",
+						"activity": "cus_step01",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -71,11 +71,11 @@
 				}
 			},
 			{
-				"name": "Azure Function1",
+				"name": "err_log",
 				"type": "AzureFunctionActivity",
 				"dependsOn": [
 					{
-						"activity": "Custom1",
+						"activity": "cus_step01",
 						"dependencyConditions": [
 							"Failed"
 						]
