@@ -1,6 +1,7 @@
 {
 	"name": "CUS - EXT- Data From HR SYS",
 	"properties": {
+		"description": "Este pipeline faz a ingestão dos dados de RH via script batch.",
 		"activities": [
 			{
 				"name": "cus_step01",
