@@ -1,6 +1,7 @@
 {
 	"name": "WKF- Sales",
 	"properties": {
+		"description": "Workflow responsavel por executar toda a cadeia de vendas.",
 		"activities": [
 			{
 				"name": "EXL - Customer",
