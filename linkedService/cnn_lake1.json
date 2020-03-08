@@ -1,0 +1,13 @@
+{
+	"name": "cnn_lake1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://lakeg1.azuredatalakestore.net/webhdfs/v1",
+			"tenant": "e7c411a6-9013-4967-a5b1-3d08f9edc13e",
+			"subscriptionId": "b1ca0227-2e4b-48e1-82e4-0ba99fdb2d8f",
+			"resourceGroupName": "RZ_Bigdata"
+		}
+	}
+}
