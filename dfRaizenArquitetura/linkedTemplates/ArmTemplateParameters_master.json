@@ -1,0 +1,66 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dfRaizenArquitetura"
+		},
+		"cnn_blob1_connectionString": {
+			"value": ""
+		},
+		"cnn_blobshared_connectionString": {
+			"value": ""
+		},
+		"cnn_lake2_accountKey": {
+			"value": ""
+		},
+		"cnn_sqlraiz_connectionString": {
+			"value": ""
+		},
+		"cnn_sqlraiz_withkey_connectionString": {
+			"value": ""
+		},
+		"serv_batch_accessKey": {
+			"value": ""
+		},
+		"serv_pythonfunc_functionKey": {
+			"value": ""
+		},
+		"cnn_lake2_properties_typeProperties_url": {
+			"value": "https://lakeg2.dfs.core.windows.net"
+		},
+		"cnn_lakeg2_corp_properties_typeProperties_url": {
+			"value": "https://lakestorageg2.dfs.core.windows.net"
+		},
+		"key_corp_properties_typeProperties_baseUrl": {
+			"value": "https://kvbigdata.vault.azure.net/"
+		},
+		"serv_batch_properties_typeProperties_accountName": {
+			"value": "batchbigdataca"
+		},
+		"serv_batch_properties_typeProperties_batchUri": {
+			"value": "https://batchbigdataca.canadacentral.batch.azure.com"
+		},
+		"serv_batch_properties_typeProperties_poolName": {
+			"value": "pool01"
+		},
+		"cnn_lake1_properties_typeProperties_dataLakeStoreUri": {
+			"value": "https://lakeg1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"cnn_lake1_properties_typeProperties_tenant": {
+			"value": "e7c411a6-9013-4967-a5b1-3d08f9edc13e"
+		},
+		"cnn_lake1_properties_typeProperties_subscriptionId": {
+			"value": "b1ca0227-2e4b-48e1-82e4-0ba99fdb2d8f"
+		},
+		"cnn_lake1_properties_typeProperties_resourceGroupName": {
+			"value": "RZ_Bigdata"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
