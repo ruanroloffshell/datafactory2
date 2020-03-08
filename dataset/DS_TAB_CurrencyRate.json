@@ -15,7 +15,7 @@
 				"type": "AzureBlobStorageLocation",
 				"fileName": "CurrencyRate.csv",
 				"folderPath": "oltp",
-				"container": "tmplake"
+				"container": "tmp"
 			},
 			"columnDelimiter": "\t",
 			"escapeChar": "\\",
