@@ -14,7 +14,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": "raw/bike/currency",
-				"fileSystem": "lakeg2"
+				"fileSystem": "lake2"
 			},
 			"compressionCodec": "snappy"
 		},
