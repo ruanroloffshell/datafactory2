@@ -14,7 +14,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": "app/myapp/salesjoin",
-				"fileSystem": "lakeg2"
+				"fileSystem": "lake2"
 			},
 			"compressionCodec": "snappy"
 		},
